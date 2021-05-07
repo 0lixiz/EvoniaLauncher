@@ -10,7 +10,7 @@ $ cd EvoniaLauncher-Main
 $ npm install
 ```
 
----
+---u
 
 **Lancer l'application**
 
