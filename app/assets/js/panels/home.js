@@ -22,7 +22,7 @@ class Home {
     let news = document.querySelector(".news");
     console.log("[Home] Initializing News...");
     try {
-      let rss = await fetch("https://paladium-pvp.fr/forums/informations.6/index.rss").then(res => res.text());
+      let rss = await fetch("https://api.evoniamc.eu/news.rss").then(res => res.text());
       let rssparse = JSON.parse(convert.xml2json(rss, {compact: true}));
       if(!rssparse.rss && rssparse.response && rssparse.response.message){
         let block = document.createElement("div");
@@ -70,8 +70,9 @@ class Home {
             <div class="day">${date.day}</div>
             <div class="month">${date.month}</div>
           </div>
+          <br>
+          <div>${item["description"]._text}</div>
         </div>
-        <div class="news-content">${item["content:encoded"]._cdata.replace(/color: rgb\(255, 255, 255\)/g, "")}</div>
         `;
         let anchors = block.querySelectorAll("a.link.link--external");
         if(anchors.length > 0 && anchors[anchors.length-1].href.toLowerCase() == item["link"]._text.toLowerCase()){
@@ -90,7 +91,7 @@ class Home {
       <div class="news-header error">
         <div class="header-text">
           <img class="avatar" src="assets/images/error.png"></img>
-          <a class="title" href="https://paladium-pvp.fr/">Une erreur est survenue. Merci de réessayer plus tard.</a>
+          <a class="title" href="https://evoniamc.eu/">Une erreur est survenue. Merci de réessayer plus tard.</a>
         </div>
       </div>
       `;
@@ -124,17 +125,14 @@ class Home {
     let desc = document.querySelector(".server-text .desc");
     let online = document.querySelector(".etat-text .online");
 
-    let server = await testServer("proxy.paladium-pvp.fr");
+    let server = await testServer("46.105.156.212:25982");
 
     if(server.error){
-      server = await testServer("shield-1.palashield.fr");
+      server = await testServer("46.105.156.212:25565");
       if(server.error){
-        server = await testServer("shield-2.palashield.fr");
-        if(server.error){
-          desc.innerHTML = `<span class="red">Fermé</span> - 0ms`;
-          if(!online.classList.contains("off")) online.classList.toggle("off");
-          return player.textContent = 0;
-        }
+        desc.innerHTML = `<span class="red">Fermé</span> - 0ms`;
+        if(!online.classList.contains("off")) online.classList.toggle("off");
+        return player.textContent = 0;
       }
     }
 
@@ -175,7 +173,7 @@ class Home {
   initLinks(){
     let status = document.querySelector(".status");
     status.addEventListener("click", () => {
-      nw.Shell.openExternal("http://status.paladium-pvp.fr");
+      nw.Shell.openExternal("http://status.evoninamc.eu");
     });
 
     /* store */
@@ -184,43 +182,20 @@ class Home {
     challenger.addEventListener("click", () => {
       nw.Shell.openExternal("https://store.paladium-pvp.fr/category/grades-v7#page");
     });
-    let champion = document.querySelector(".store-item.champion .item-info");
-    champion.addEventListener("click", () => {
-      nw.Shell.openExternal("https://store.paladium-pvp.fr/category/grades-v7#page");
-    });
-    let legende = document.querySelector(".store-item.legende .item-info");
-    legende.addEventListener("click", () => {
-      nw.Shell.openExternal("https://store.paladium-pvp.fr/category/grades-v7#page");
-    });
-    let store = document.querySelector(".store-link");
-    store.addEventListener("click", () => {
-      nw.Shell.openExternal("http://store.paladium-pvp.fr");
-    });
 
     /* follow */
 
-    let paladium = document.querySelector("#paladium.follow-link");
+    let paladium = document.querySelector("#website.follow-link");
     paladium.addEventListener("click", () => {
-      nw.Shell.openExternal("https://paladium-pvp.fr");
+      nw.Shell.openExternal("https://evoniamc.eu/");
     });
     let twitter = document.querySelector("#twitter.follow-link");
     twitter.addEventListener("click", () => {
-      nw.Shell.openExternal("https://twitter.com/PaladiumPvP");
+      nw.Shell.openExternal("https://twitter.com/evonia_network/");
     });
     let discord = document.querySelector("#discord.follow-link");
     discord.addEventListener("click", () => {
-      nw.Shell.openExternal("https://discord.gg/paladium");
-    });
-    let teamspeak = document.querySelector("#teamspeak.follow-link");
-    teamspeak.addEventListener("click", async () => {
-      if(localStorage.getItem("selected") == null)
-        return this.popup.showPopup("Aucun compte", "Vous devez vous connecter à votre compte minecraft avant de pouvoir vous connecter au teamspeak", "warning", { value: "Ok" });
-      let account = await this.accounts.get(localStorage.getItem("selected"));
-      nw.Shell.openExternal(`ts3server://ts.paladium-pvp.fr?nickname=${account.username}`);
-    });
-    let instagram = document.querySelector("#instagram.follow-link");
-    instagram.addEventListener("click", () => {
-      nw.Shell.openExternal("https://www.instagram.com/paladium.pvp");
+      nw.Shell.openExternal("https://discord.gg/xd5VuMRduy");
     });
     let youtube = document.querySelector("#youtube.follow-link");
     youtube.addEventListener("click", () => {
@@ -231,11 +206,12 @@ class Home {
 
     let ToU = document.querySelector("#ToU");
     ToU.addEventListener("click", () => {
-      nw.Shell.openExternal("https://paladium-pvp.fr/help/cgu");
+      nw.Shell.openExternal("https://evoniamc.eu/cgu");
     });
-    let ToS = document.querySelector("#ToS");
-    ToS.addEventListener("click", () => {
-      nw.Shell.openExternal("https://paladium-pvp.fr/help/cgv");
+
+    let Copy = document.querySelector("#Copy");
+    ToU.addEventListener("click", () => {
+      nw.Shell.openExternal("https://devmetrics.shop");
     });
   }
 }

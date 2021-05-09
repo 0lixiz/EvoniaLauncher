@@ -4,6 +4,7 @@
    "productName": "Paladium Launcher",
    "description": "Paladium Launcher",
    "main": "app/splash.html",
+   "license": "UNLICENSED",
    "author": "Paladium",
    "window": {
       "title": "Paladium Launcher",
@@ -21,7 +22,7 @@
    },
    "scripts": {
       "dev": "nw .",
-      "prod": "nwbuild --platforms win32,win64,osx64,linux32,linux64 --buildDir dist/ src/"
+      "prod": "nwbuild --platforms win32,win64,osx64,linux32,linux64 --buildDir dist/ ./"
    },
    "dependencies": {
       "adm-zip": "^0.4.16",
@@ -29,5 +30,12 @@
       "nw": "^0.53.0",
       "nw-autoupdater": "^1.1.11",
       "xml-js": "^1.6.11"
+   },
+   "devDependencies": {
+      "nw-builder": "^3.5.7"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/0lixiz/EvoniaLauncher.git"
    }
 }
